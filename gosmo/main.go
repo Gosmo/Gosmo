@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/gob"
-    "flag"
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -13,7 +13,7 @@ type Data struct {
 }
 
 var (
-    port string
+	port string
 )
 
 func handleConnection(conn net.Conn) {
@@ -26,8 +26,8 @@ func handleConnection(conn net.Conn) {
 }
 
 func init() {
-    flag.StringVar(&port, "p", "8080", "Port to listen to.")
-    flag.Parse()
+	flag.StringVar(&port, "p", "8080", "Port to listen to.")
+	flag.Parse()
 }
 
 func main() {

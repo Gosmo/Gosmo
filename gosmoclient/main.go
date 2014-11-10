@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/gob"
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -12,6 +13,11 @@ import (
 type Data struct {
 	D string
 }
+
+var (
+	port   string
+	script string
+)
 
 // Sort of placeholder for properly doing this.
 // Also, requires the full path of the file.
@@ -24,24 +30,26 @@ func runScript(file string) string {
 }
 
 func init() {
-	if len(os.Args) != 2 {
+	flag.StringVar(&port, "p", "8080", "Port to connect to.")
+	flag.StringVar(&script, "s", "", "Script to run.")
+	flag.Parse()
+
+	if script == "" {
 		fmt.Fprintln(os.Stderr, "Need a script to run.")
 		os.Exit(1)
 	}
 }
 
 func main() {
-	fmt.Println("start client")
-	conn, err := net.Dial("tcp", "localhost:8080")
+	// Localhost as a placeholder and for testing, to be a configurable option.
+	conn, err := net.Dial("tcp", "localhost:"+port)
 	if err != nil {
 		log.Fatal("Connection error", err)
 	}
 	encoder := gob.NewEncoder(conn)
-	rv := runScript(os.Args[1])
-	err = encoder.Encode(Data{rv})
-	if err != nil {
+	rv := runScript(script)
+	if err = encoder.Encode(Data{rv}); err != nil {
 		log.Fatal(err)
 	}
 	conn.Close()
-	fmt.Println("done")
 }
