@@ -21,7 +21,6 @@ There were no solution for small scale highly customizable system monitoring. An
     * Executes script / sends mail when certain criteria is met, for example: CPU load > 4.0 over 5 minutes. 
 * Gosmo/server/save: 
     * Saves received and selected data to file or db
-
 * Gosmo/client: 
     * Gathers basic information from system, for example: cpu load, memory usage and HDD space and sends it to Gosmo/server
     * .conf file to manage polling interval and information gathered / sent to Gosmo/server
