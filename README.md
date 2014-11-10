@@ -6,12 +6,15 @@ Gosmo
 
 
 **Where:** 
+
 Small non-critical networks. We hope to support most free unix like operating system. 
 
 **Why:**
+
 There were no solution for small scale highly customizable system monitoring. And we like to learn Go.
 
 **What:** 
+
 * Gosmo/server: 
     * Listens to selected port and receives information from client
 * Gosmo/server/alert:
@@ -31,4 +34,4 @@ There were no solution for small scale highly customizable system monitoring. An
 
 
 
-****This project is a living entity and will change rapidly and irrationally.****
+***This project is a living entity and will change rapidly and irrationally.***
