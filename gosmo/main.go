@@ -20,7 +20,8 @@ func handleConnection(conn net.Conn) {
 	dec := gob.NewDecoder(conn)
 	d := &Data{}
 	if err := dec.Decode(d); err != nil {
-		log.Fatal("Decode error: ", err)
+		log.Println("Decode error: ", err)
+		return
 	}
 	log.Printf("Received : %+v\n", d)
 }
@@ -31,7 +32,7 @@ func init() {
 }
 
 func main() {
-	fmt.Println("start")
+	log.Println("Server started.")
 	ln, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		panic(err)
@@ -42,7 +43,6 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
-		// a goroutine handles conn so that the loop can accept other connections
 		go handleConnection(conn)
 	}
 }

@@ -30,7 +30,7 @@ func runScript(file string) string {
 	}
 	out, err := exec.Command(interp, file).Output()
 	if err != nil {
-		panic(err)
+		return "exec error with: " + file
 	}
 	return string(out)
 }
