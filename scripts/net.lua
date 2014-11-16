@@ -6,6 +6,7 @@ local io = { open = io.open,
              read = io.read,
              close = io.close,
              write = io.write,
+             stderr = io.stderr
              }
 
 local units = { b = 1, kb = 1024, mb = 1024^2 }
@@ -13,7 +14,12 @@ local units = { b = 1, kb = 1024, mb = 1024^2 }
 local readf = function(file)
     local ret = ""
     local fh = io.open(file)
-    if fh ~= nil then ret = fh:read'*l' else ret = nil end fh:close()
+    if fh == nil then
+        io.stderr:write("Error with file reading.\n")
+        os.exit(1)
+    end
+    ret = fh:read'*l'
+    fh:close()
     return ret
 end
 
