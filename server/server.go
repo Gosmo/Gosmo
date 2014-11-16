@@ -1,9 +1,7 @@
-package main
+package server
 
 import (
 	"encoding/gob"
-	"flag"
-	"fmt"
 	"log"
 	"net"
 )
@@ -11,10 +9,6 @@ import (
 type Data struct {
 	D string
 }
-
-var (
-	port string
-)
 
 func handleConnection(conn net.Conn) {
 	dec := gob.NewDecoder(conn)
@@ -26,21 +20,16 @@ func handleConnection(conn net.Conn) {
 	log.Printf("Received : %+v\n", d)
 }
 
-func init() {
-	flag.StringVar(&port, "p", "8080", "Port to listen to.")
-	flag.Parse()
-}
-
-func main() {
+func Run(port string) {
 	log.Println("Server started.")
 	ln, err := net.Listen("tcp", ":"+port)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	for {
 		conn, err := ln.Accept() // this blocks until connection or error
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			continue
 		}
 		go handleConnection(conn)

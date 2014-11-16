@@ -6,7 +6,7 @@ PREV_TOTAL=0
 PREV_IDLE=0
 
 counter=0
-limitsecs=10
+limitsecs=4
 
 # Sum all the CPU usage percentages and then calc
 # the average in that time. Silly thing to do.
@@ -42,4 +42,4 @@ while (( counter < limitsecs )); do
 done
 
 (( total /= limitsecs ))
-printf "%d" $total
+printf "CPU: %d%%" $total
