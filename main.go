@@ -17,6 +17,7 @@ var (
 	gosmoMode  int
 	host, port string
 	scriptDir  string
+	machineID  string
 )
 
 func letArgs(args []string, n int) string {
@@ -30,7 +31,10 @@ func letArgs(args []string, n int) string {
 }
 
 func usage() {
-	fmt.Printf("Usage: %s <server|client> -h[elp] -p[ort] -host -s[cripts]\n", os.Args[0])
+	fmt.Println(`Usage:
+    server -p[ort]
+    client -id -p[ort] -host -s[cripts]
+    -h[elp]`)
 	os.Exit(0)
 }
 
@@ -59,12 +63,14 @@ func init() {
 			host = letArgs(args, i)
 		case "-s", "-scripts", "--scripts":
 			scriptDir = letArgs(args, i)
+		case "-id", "--id":
+			machineID = letArgs(args, i)
 		}
 	}
 
 	switch "" {
 	case port:
-		port = "8080"
+		port = "28080"
 	case host:
 		host = "localhost"
 	case scriptDir:
@@ -77,6 +83,6 @@ func main() {
 	case serverMode:
 		server.Run(port)
 	case clientMode:
-		client.Run(host, port, scriptDir)
+		client.Run(machineID, host, port, scriptDir)
 	}
 }

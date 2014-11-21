@@ -11,8 +11,14 @@ import (
 	"strings"
 )
 
+type header struct {
+	MachineID     string
+	ContentLength int
+}
+
 type Data struct {
-	D string
+	Header header
+	Body   string
 }
 
 // Sort of placeholder for properly doing this.
@@ -57,7 +63,7 @@ func getScripts(scriptDir string) (files []string) {
 	return
 }
 
-func Run(host, port, scriptDir string) {
+func Run(machineID, host, port, scriptDir string) {
 	conn, err := net.Dial("tcp", host+":"+port)
 	if err != nil {
 		log.Fatal("Connection error with:", err)
@@ -75,7 +81,11 @@ func Run(host, port, scriptDir string) {
 		rv := runScript(scriptDir + script)
 		allData += "\n" + rv
 	}
-	if err = encoder.Encode(Data{allData}); err != nil {
+	d := Data{
+		Header: header{machineID, len(allData)},
+		Body:   allData,
+	}
+	if err = encoder.Encode(d); err != nil {
 		log.Println(err)
 	}
 }
